@@ -3,6 +3,18 @@
 <%@ include file="../layout/header.jsp" %>
 <div class="jumbotron">
 		<div class="container">
+			<div class="searchArea">
+				<form action="${contextPath}/board/list" id="searchForm">
+					<select name="type">
+						<option value="">===</option>
+						<option value="T" ${pageMaker.criteria.type eq 'T' ? 'selected':''}>제목</option>
+						<option value="C" ${pageMaker.criteria.type eq 'C' ? 'selected':''}>내용</option>
+						<option value="W" ${pageMaker.criteria.type eq 'W' ? 'selected':''}>작성자</option>
+					</select>
+					<input type="text" name="keyword" value="${pageMaker.criteria.keyword}">
+					<button class="btn btn-primary">검색</button>
+				</form>
+			</div>
 			<h2>자유게시판</h2>
 		</div>
 	</div>
@@ -34,20 +46,36 @@
 			</tr>
 			</c:forEach>
 		</table>
-		<ul class="pagination">
+		<form action="${contextPath}/board/list" id="pageForm">
+		<input type="hidden" name="page" value="${pageMaker.criteria.page}">
+		<input type="hidden" name="type" value="${pageMaker.criteria.type}">
+		<input type="hidden" name="keyword" value="${pageMaker.criteria.keyword}">
+			<ul class="pagination">
 				<c:if test="${pageMaker.prev}">
-					<li class="page-item"><a class="page-link" href="?page=${pageMaker.startPage-1}">이전페이지</a></li>
+					<li class="page-item"><a class="page-link" href="${pageMaker.startPage-1}">이전페이지</a></li>
 				</c:if>
 				<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}"
 					var="pageNum">
-					<li class="page-item ${param.page == pageNum ? 'active':''}">
-						<a href="?page=${pageNum}" class="page-link">${pageNum}</a>
+					<li class="page-item ${pageMaker.criteria.page == pageNum ? 'active':''}">
+						<a href="${pageNum}" class="page-link">${pageNum}</a>
 					</li>
 				</c:forEach>
 				<c:if test="${pageMaker.next}">
-					<li class="page-item"><a class="page-link" href="?page=${pageMaker.endPage+1}">다음페이지</a></li>
+					<li class="page-item"><a class="page-link" href="${pageMaker.endPage+1}">다음페이지</a></li>
 				</c:if>
 				<br>
 			</ul>
+		</form>
 		</div>
 <%@ include file="../layout/footer.jsp" %>
+<script>
+	$(function(){
+		let pageForm = $('#pageForm')
+		$('#pageForm a').on('click',function (e){
+			e.preventDefault();
+			pageForm.find('input[name="page"]').val($(this).attr('href'));
+			
+			$('#pageForm').submit();
+		});
+	})
+</script> 

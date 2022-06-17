@@ -30,7 +30,7 @@
 $(function(){
 	let getForm = $("#getForm");
 	$('#getForm .list').on('click',function(){
-		getEmpty();
+		getForm.empty();
 		getForm.attr("action","list");
 		getForm.submit();
 	})

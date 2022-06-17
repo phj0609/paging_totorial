@@ -26,9 +26,7 @@ public class BoardController {
 	public String boardList(Model model, Criteria criteria) {
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(service.totalCount()); 
-		System.out.println("시작페이지 : " + pageMaker.getStartPage());
-		System.out.println("끝 페이지 : " + pageMaker.getEndPage());
+		pageMaker.setTotalCount(service.totalCount(criteria));
 		model.addAttribute("list", service.getList(criteria));
 		model.addAttribute("pageMaker", pageMaker);
 		return "board/list";
@@ -66,11 +64,12 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")	
-	public String register(Board board, Errors errors) {
+	public String register(Board board, Errors errors, RedirectAttributes rttr) {
 		new BoardValidator().validate(board, errors);
 		if (errors.hasErrors()) {
 			return "board/register";
 		}
+		service.register(board);
 		System.out.println("제목 : " + board.getTitle());
 		System.out.println("내용 : " + board.getContent());
 		System.out.println("작성자 : " + board.getWriter());

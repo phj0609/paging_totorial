@@ -9,6 +9,6 @@
 	내용 : 
 	<textarea rows="20" cols="30" name="content">${board.content}</textarea><br>
 	작성자 : ${board.writer}<br>
-	<button>수정하기</button>
+	<button class="btn btn-success">수정</button>
 </form>
 <%@ include file="../layout/footer.jsp" %> 

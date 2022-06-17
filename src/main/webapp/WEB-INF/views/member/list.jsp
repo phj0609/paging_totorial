@@ -4,7 +4,8 @@
 <div class="jumbotron">
 	<h2>회원목록</h2>
 </div>
-<div class="container"></div>
+<div class="container">
+	<a href="register" class="btn btn-primary">회원가입</a>
 	<table class="table">
 		<tr>
 			<th>회원번호</th>

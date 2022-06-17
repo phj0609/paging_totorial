@@ -27,8 +27,12 @@ public class PageMaker {
 		int tempEndPage = (int) (Math.ceil(totalCount/(double) criteria.getPerPageNum()));
 		if(endPage > tempEndPage) endPage = tempEndPage;
 		
-		prev = startPage == 1 ? false : true;
-		next = endPage >= tempEndPage ? false : true;
+		/*
+		 * prev = startPage == 1 ? false : true; next = endPage >= tempEndPage ? false :
+		 * true;
+		 */
+		prev = startPage != 1;
+		next = endPage < tempEndPage;
 	}
 	
 	
